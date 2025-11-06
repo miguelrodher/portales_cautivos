@@ -1,0 +1,1 @@
+<h1>Usuario registrado correctamente</h1>
