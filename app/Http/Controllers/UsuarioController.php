@@ -40,22 +40,29 @@ class UsuarioController extends Controller
     {
         $reglas = 
         [
-            'nombre'   => ['required', 'string', 'max:50', 'regex:/^[\p{L}\s\'\.-]+$/u'],
-            'correo'   => ['required', 'email', 'max:150', 'unique:usuarios,correo_electronico'],
+            'nombre'   => ['required', 'min:3', 'max:50', 'regex:/^[\p{L}\s\'\.-]+$/u'],
+            'correo'   => 
+            [
+                'required', 
+                'min:5',
+                'max:150', 
+                'unique:usuarios,correo_electronico', 
+                'regex:/^(?=.*[a-z])[A-Za-z0-9._%+\-]+@(?=[A-Za-z0-9\.-]*[a-z])(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}$/'
+            ],
             'telefono' => ['required', 'regex:/^\d{10}$/'],
         ];
 
         $mensajes = 
         [
             'nombre.required'    => 'Debes ingresar el nombre del usuario.',
-            'nombre.string'      => 'El nombre debe ser texto.',
+            'nombre.min'         => 'El nombre debe tener al menos 3 caracteres.',
             'nombre.max'         => 'El nombre no puede tener más de 50 caracteres.',
             'nombre.regex'       => 'El nombre solo puede contener letras, espacios, apóstrofes, puntos y guiones.',
 
             'correo.required'    => 'Debes ingresar el correo electrónico.',
-            'correo.email'       => 'Introduce una dirección de correo válida.',
             'correo.max'         => 'El correo no puede tener más de 150 caracteres.',
             'correo.unique'      => 'Ese correo ya está registrado.',
+            'correo.regex'       => 'El formato del correo es incorrecto, evite usar solo mayúsculas.',
 
             'telefono.required'  => 'Debes ingresar el teléfono.',
             'telefono.regex'     => 'El teléfono debe contener exactamente 10 dígitos (solo números).',

@@ -16,7 +16,9 @@ class CreateCuentasAdministrativasTable extends Migration
         Schema::create('cuentas_administrativas', function (Blueprint $table) 
         {
             $table->bigIncrements('id');
-            $table->string('nombre', 50)->unique();
+            $table->string('nombre', 50);
+            $table->string('apellido_paterno', 50);
+            $table->string('apellido_materno', 50);
             $table->string('contraseña', 62);
             $table->string('correo_electronico', 150)->unique();
             $table->boolean('estatus')->nullable();
