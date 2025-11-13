@@ -10,13 +10,22 @@
 <body class="bg-light">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="">Panel Administradores</a>
+  <div class="container-fluid px-5 py-3">
+    <h1 class="text-white" href="">Estadísticas</h1>
     <div class="d-flex align-items-center">
-      <span class="text-white me-3">Administrador</span>
-      <form method="POST" action="">
+      <form method="POST" action="{{ route('administrador.logout') }}" class="d-flex align-items-center">
         @csrf
-        <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
+
+        @if(auth()->check() && (int) auth()->user()->roles_id === 1)
+            <a href="{{ route('administrador.register') }}" class="btn btn-dark me-2">Registrar administrador</a>
+        @endif
+
+        <a href="{{ route('administrador.restriccion') }}" class="btn btn-dark me-2">Restricciones</a>
+        <a href="" class="btn btn-dark me-2">Descargar</a>
+
+        <button type="submit" class="btn btn-dark" aria-label="Cerrar sesión">
+          Cerrar sesión
+        </button>
       </form>
     </div>
   </div>
@@ -28,6 +37,8 @@
       <h3 class="mb-0">Dashboard</h3>
     </div>
   </div>
+
+  
 
   <div class="row g-3 mb-4">
     <div class="col-sm-6 col-md-3">
@@ -115,7 +126,6 @@
         <div class="card-body">
           <h6>Acciones rápidas</h6>
           <p class="mb-2">En esta vista demo, los botones son ilustrativos.</p>
-          <a href="" class="btn btn-primary btn-sm">Crear administrador</a>
         </div>
       </div>
     </div>

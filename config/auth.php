@@ -40,12 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        
-        'admin' => 
-        [
-            'driver' => 'session',
-            'provider' => 'administrativos',
-        ],
     ],
 
     /*
@@ -67,12 +61,6 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        'administrativos' => 
-        [
             'driver' => 'eloquent',
             'model' => App\Models\CuentaAdministrativa::class,
         ],

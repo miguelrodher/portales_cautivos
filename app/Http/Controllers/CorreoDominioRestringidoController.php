@@ -25,7 +25,7 @@ class CorreoDominioRestringidoController extends Controller
      */
     public function create()
     {
-        return view('correos_dominios_restringidos.create');
+        return view('restricciones.correos.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class CorreoDominioRestringidoController extends Controller
 
         CorreoDominioRestringido::create($request->all());
 
-        return redirect()->route('correos-dominios-restringidos.index');
+        return redirect()->route('administrador.restriccion');
     }
 
     /**
@@ -69,9 +69,10 @@ class CorreoDominioRestringidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CorreoDominioRestringido $correo_dominio_restringido)
+    public function edit($id)
     {
-        return view('correos_dominios_restringidos.edit', compact('correo_dominio_restringido'));
+        $restriccion = CorreoDominioRestringido::findOrFail($id);
+        return view('restricciones.correos.edit', compact('restriccion'));
     }
 
     /**
@@ -81,8 +82,10 @@ class CorreoDominioRestringidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CorreoDominioRestringido $correo_dominio_restringido)
+    public function update(Request $request, $id)
     {
+        $id = (int) $id;
+
         $request->validate
         ([
             'restriccion' => 
@@ -90,13 +93,15 @@ class CorreoDominioRestringidoController extends Controller
                 'required',
                 'string',
                 'max:100',
-                'unique:correos_dominios_restringidos,restriccion,' . $correo_dominio_restringido->id . ',id',
+                'unique:correos_dominios_restringidos,restriccion,' . $id . ',id',
             ],
         ]);
 
-        $correo_dominio_restringido->update($request->all());
+        $model = CorreoDominioRestringido::findOrFail($id);
+        $model->restriccion = trim($request['restriccion']);
+        $model->save();
 
-        return redirect()->route('correos-dominios-restringidos.index');
+        return redirect()->route('administrador.restriccion');
     }
 
     /**
@@ -105,9 +110,11 @@ class CorreoDominioRestringidoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CorreoDominioRestringido $correo_dominio_restringido)
+    public function destroy($id)
     {
-        $correo_dominio_restringido->delete();
-        return redirect()->route('correos-dominios-restringidos.index');
+        $item = CorreoDominioRestringido::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('administrador.restriccion');
     }
 }

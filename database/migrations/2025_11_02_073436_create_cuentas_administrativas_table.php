@@ -19,12 +19,14 @@ class CreateCuentasAdministrativasTable extends Migration
             $table->string('nombre', 50);
             $table->string('apellido_paterno', 50);
             $table->string('apellido_materno', 50);
-            $table->string('contraseña', 62);
+            $table->string('contrasena', 62);
             $table->string('correo_electronico', 150)->unique();
             $table->boolean('estatus')->nullable();
             $table->unsignedBigInteger('roles_id')->nullable();
 
             $table->foreign('roles_id')->references('id')->on('roles');
+
+            $table->timestamps();
         });
     }
 

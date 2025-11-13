@@ -21,16 +21,6 @@
               </svg>
             </div>
 
-            @if ($errors->any())
-              <div class="alert alert-danger">
-                <ul class="mb-0">
-                  @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-              </div>
-            @endif
-
             @if (session('success'))
               <div class="alert alert-success">
                 {{ session('success') }}
@@ -40,45 +30,105 @@
             <form method="POST" action="{{ route('administrador.register.post') }}">
               @csrf
 
+
               <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" name="nombre" class="form-control" required placeholder="Ingrese su nombre">
+                <label class="form-label uppercase'input">Nombre</label>
+                <input value="{{ old('nombre') }}" style="text-transform: uppercase;" type="text" name="nombre" class="form-control" required placeholder="Ingrese su nombre">
+
+                @if($errors->has('nombre'))
+                  @foreach($errors->get('nombre') as $message)
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                  @endforeach
+                @endif
               </div>
+
 
               <div class="mb-3">
                 <label class="form-label">Apellido Paterno</label>
-                <input type="text" name="apellido_paterno" class="form-control" required placeholder="Ingrese su apellido paterno"> 
+                <input value="{{ old('apellido_paterno') }}" style="text-transform: uppercase;" type="text" name="apellido_paterno" class="form-control" required placeholder="Ingrese su apellido paterno"> 
+
+                @if($errors->has('apellido_paterno'))
+                  @foreach($errors->get('apellido_paterno') as $message)
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                  @endforeach
+                @endif
               </div>
+
 
               <div class="mb-3">
                 <label class="form-label">Apellido Materno</label>
-                <input type="text" name="apellido_materno" class="form-control" required placeholder="Ingrese su apellido materno">
+                <input value="{{ old('apellido_materno') }}" style="text-transform: uppercase;" type="text" name="apellido_materno" class="form-control" required placeholder="Ingrese su apellido materno">
+
+                @if($errors->has('apellido_materno'))
+                  @foreach($errors->get('apellido_materno') as $message)
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                  @endforeach
+                @endif
               </div>
+
 
               <div class="mb-3">
                 <label class="form-label">Correo electrónico</label>
-                <input type="email" name="correo_electronico" class="form-control" required placeholder="Ingrese su correo">
+                <input value="{{ old('correo_electronico') }}" type="email" name="correo_electronico" class="form-control" required placeholder="INGRESE SU CORREO">
+
+                @if($errors->has('correo_electronico'))
+                  @foreach($errors->get('correo_electronico') as $message)
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                  @endforeach
+                @endif
               </div>
+
 
               <div class="mb-3">
                 <label class="form-label">Contraseña</label>
-                <input type="password" name="contraseña" class="form-control" required placeholder="Ingrese su contraseña">
+                <input value="{{ old('contrasena') }}" type="password" name="contrasena" class="form-control" required placeholder="INGRESE SU CONTRASEÑA">
+
+                @if($errors->has('contrasena'))
+                  @foreach($errors->get('contrasena') as $message)
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                  @endforeach
+                @endif
               </div>
+
 
               <div class="mb-3">
-				<label class="form-label">Confirmar contraseña</label>
-				<input type="password" name="contraseña_confirmation" class="form-control" required placeholder="Confirme su contraseña">
-			  </div>
+        				<label class="form-label">Confirmar contraseña</label>
+        				<input value="{{ old('contrasena_confirmation') }}" type="password" name="contrasena_confirmation" class="form-control" required placeholder="CONFIRME SU CONTRASEÑA">
+      			  </div>
 
 
-              <div class="d-grid mt-4 pt-3">
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+              <div class="mb-3">
+                <label class="form-label">Rol del usuario</label>
+                <select name="roles_id" class="form-select" required>
+                  <option value="">SELECCIONE UN ROL</option>
+                  @foreach ($roles as $rol)
+                    <option value="{{ $rol->id }}" {{ old('roles_id') == $rol->id ? 'selected' : '' }}>
+                      {{ $rol->rol }}
+                    </option>
+                  @endforeach
+                </select>
+
+                @error('roles_id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+
+
+              <div class="d-flex justify-content-center row mt-4 pt-3 ps-3 pe-3 ">
+                <a href="{{ route('administrador.dashboard') }}" class="btn btn-danger col-5 me-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary col-5 ms-2">Registrar usuario</button>
               </div>
             </form>
-
-            <div class="text-center mt-3">
-              <small class="text-muted">¿Ya tienes cuenta? <a href="{{ route('administrador.login') }}">Inicia sesión</a></small>
-            </div>
 
           </div>
         </div>

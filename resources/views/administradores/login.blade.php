@@ -54,7 +54,6 @@
                        type="email"
                        class="form-control"
                        value="{{ old('correo_electronico') }}"
-                       required
                        autocomplete="email"
                        autofocus
                        placeholder="Inserte su correo">
@@ -63,10 +62,9 @@
               <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
                 <input id="contrasena"
-                       name="contraseña"
+                       name="contrasena"
                        type="password"
                        class="form-control"
-                       required
                        autocomplete="current-password"
                        placeholder="Inserte su contraseña">
               </div>
@@ -75,9 +73,6 @@
                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
               </div>
 
-              <div class="text-center">
-                <small class="text-muted">¿No tienes cuenta? <a href="{{ route('administrador.register') }}">Regístrate</a></small>
-              </div>
             </form>
 
           </div>
